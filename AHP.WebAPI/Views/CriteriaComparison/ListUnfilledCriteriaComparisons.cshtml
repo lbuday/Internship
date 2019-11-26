@@ -1,0 +1,66 @@
+﻿@model List<AHP.WebAPI.Models.CriteriaComparisonMvcModel>
+@{
+    ViewBag.Title = "ListAlternativeComparisons";
+}
+
+<h2>Unfilled comparisons</h2>
+<br />
+
+
+@using (@Html.BeginForm("ListUnfilledCriteriaComparisons", "CriteriaComparison", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                First criterion
+            </th>
+
+            <th width="400px">
+                Ratio
+            </th>
+            <th>
+                Second criterion
+            </th>
+            <th></th>
+
+        </tr>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                @Html.Hidden("comps.Index", (@i + 10))
+                @Html.Hidden("comps[" + (@i + 10) + "].CriterionID1", Model[i].CriterionID1)
+                <td>
+                    @Model[i].CriterionName1
+                </td>
+                <td>
+                    @Html.TextBox("comps[" + (@i + 10) + "].CriteriaRatio",
+                    Model[i].CriteriaRatio, new { @class = "form-control", type = "range", step = "1", min = "-8", max = "8", value = Model[i].CriteriaRatio })
+                </td>
+                <td>
+
+                    @Model[i].CriterionName2
+
+                </td>
+
+                @Html.Hidden("comps[" + (@i + 10) + "].CriterionID2", Model[i].CriterionID2, new { @readonly = "readonly" })
+
+                <td></td>
+                <td>
+                    @Html.Hidden("comps[" + (@i + 10) + "].Flipped", Model[i].Flipped)
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+        <div class="col-md col-md-10">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Criteria", "ListCriteria", "Criterion", new { page = 1 }, null)
+</div>
+

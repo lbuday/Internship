@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AHPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlternativeComparisons">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+            <PropertyRef Name="AlternativeID1" />
+            <PropertyRef Name="AlternativeID2" />
+          </Key>
+          <Property Name="CriteriaID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AlternativeID1" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AlternativeID2" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AlternativeRatio" Type="float" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Alternatives">
+          <Key>
+            <PropertyRef Name="AlternativeID" />
+          </Key>
+          <Property Name="AlternativeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AlternativeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AlternativeScore" Type="float" />
+          <Property Name="ChoiceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Choices">
+          <Key>
+            <PropertyRef Name="ChoiceID" />
+          </Key>
+          <Property Name="ChoiceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChoiceName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Criteria">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+          </Key>
+          <Property Name="CriteriaID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CriteriaName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CriteriaScore" Type="float" />
+          <Property Name="ChoiceID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CriteriaComparisons">
+          <Key>
+            <PropertyRef Name="CriteriaID1" />
+            <PropertyRef Name="CriteriaID2" />
+          </Key>
+          <Property Name="CriteriaID1" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CriteriaID2" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CriteriaRatio" Type="float" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Alternati__Alter__0F624AF8">
+          <End Role="Alternatives" Type="Self.Alternatives" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparisons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternatives">
+              <PropertyRef Name="AlternativeID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="AlternativeID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Alter__10566F31">
+          <End Role="Alternatives" Type="Self.Alternatives" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparisons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternatives">
+              <PropertyRef Name="AlternativeID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="AlternativeID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Choic__0B91BA14">
+          <End Role="Choices" Type="Self.Choices" Multiplicity="1" />
+          <End Role="Alternatives" Type="Self.Alternatives" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="ChoiceID" />
+            </Principal>
+            <Dependent Role="Alternatives">
+              <PropertyRef Name="ChoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Crite__0E6E26BF">
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparisons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="CriteriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Choices__UserID__02084FDA">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Choices" Type="Self.Choices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Choices">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Criteria__Choice__04E4BC85">
+          <End Role="Choices" Type="Self.Choices" Multiplicity="1" />
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="ChoiceID" />
+            </Principal>
+            <Dependent Role="Criteria">
+              <PropertyRef Name="ChoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CriteriaC__Crite__07C12930">
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
+          <End Role="CriteriaComparisons" Type="Self.CriteriaComparisons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="CriteriaComparisons">
+              <PropertyRef Name="CriteriaID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CriteriaC__Crite__08B54D69">
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
+          <End Role="CriteriaComparisons" Type="Self.CriteriaComparisons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="CriteriaComparisons">
+              <PropertyRef Name="CriteriaID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AHPModelStoreContainer">
+          <EntitySet Name="AlternativeComparisons" EntityType="Self.AlternativeComparisons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alternatives" EntityType="Self.Alternatives" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Choices" EntityType="Self.Choices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CriteriaComparisons" EntityType="Self.CriteriaComparisons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Alternati__Alter__0F624AF8" Association="Self.FK__Alternati__Alter__0F624AF8">
+            <End Role="Alternatives" EntitySet="Alternatives" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Alter__10566F31" Association="Self.FK__Alternati__Alter__10566F31">
+            <End Role="Alternatives" EntitySet="Alternatives" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Choic__0B91BA14" Association="Self.FK__Alternati__Choic__0B91BA14">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="Alternatives" EntitySet="Alternatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Crite__0E6E26BF" Association="Self.FK__Alternati__Crite__0E6E26BF">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Choices__UserID__02084FDA" Association="Self.FK__Choices__UserID__02084FDA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Choices" EntitySet="Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Criteria__Choice__04E4BC85" Association="Self.FK__Criteria__Choice__04E4BC85">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="Criteria" EntitySet="Criteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CriteriaC__Crite__07C12930" Association="Self.FK__CriteriaC__Crite__07C12930">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="CriteriaComparisons" EntitySet="CriteriaComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CriteriaC__Crite__08B54D69" Association="Self.FK__CriteriaC__Crite__08B54D69">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="CriteriaComparisons" EntitySet="CriteriaComparisons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AHPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AlternativeComparison">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+            <PropertyRef Name="AlternativeID1" />
+            <PropertyRef Name="AlternativeID2" />
+          </Key>
+          <Property Name="CriteriaID" Type="Guid" Nullable="false" />
+          <Property Name="AlternativeID1" Type="Guid" Nullable="false" />
+          <Property Name="AlternativeID2" Type="Guid" Nullable="false" />
+          <Property Name="AlternativeRatio" Type="Double" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alternative" Relationship="Self.FK__Alternati__Alter__0F624AF8" FromRole="AlternativeComparisons" ToRole="Alternatives" />
+          <NavigationProperty Name="Alternative1" Relationship="Self.FK__Alternati__Alter__10566F31" FromRole="AlternativeComparisons" ToRole="Alternatives" />
+          <NavigationProperty Name="Criterion" Relationship="Self.FK__Alternati__Crite__0E6E26BF" FromRole="AlternativeComparisons" ToRole="Criteria" />
+        </EntityType>
+        <EntityType Name="Alternative">
+          <Key>
+            <PropertyRef Name="AlternativeID" />
+          </Key>
+          <Property Name="AlternativeID" Type="Guid" Nullable="false" />
+          <Property Name="AlternativeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AlternativeScore" Type="Double" />
+          <Property Name="ChoiceID" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AlternativeComparisons" Relationship="Self.FK__Alternati__Alter__0F624AF8" FromRole="Alternatives" ToRole="AlternativeComparisons" />
+          <NavigationProperty Name="AlternativeComparisons1" Relationship="Self.FK__Alternati__Alter__10566F31" FromRole="Alternatives" ToRole="AlternativeComparisons" />
+          <NavigationProperty Name="Choice" Relationship="Self.FK__Alternati__Choic__0B91BA14" FromRole="Alternatives" ToRole="Choices" />
+        </EntityType>
+        <EntityType Name="Choice">
+          <Key>
+            <PropertyRef Name="ChoiceID" />
+          </Key>
+          <Property Name="ChoiceID" Type="Guid" Nullable="false" />
+          <Property Name="ChoiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alternatives" Relationship="Self.FK__Alternati__Choic__0B91BA14" FromRole="Choices" ToRole="Alternatives" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Choices__UserID__02084FDA" FromRole="Choices" ToRole="Users" />
+          <NavigationProperty Name="Criteria" Relationship="Self.FK__Criteria__Choice__04E4BC85" FromRole="Choices" ToRole="Criteria" />
+        </EntityType>
+        <EntityType Name="Criterion">
+          <Key>
+            <PropertyRef Name="CriteriaID" />
+          </Key>
+          <Property Name="CriteriaID" Type="Guid" Nullable="false" />
+          <Property Name="CriteriaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CriteriaScore" Type="Double" />
+          <Property Name="ChoiceID" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AlternativeComparisons" Relationship="Self.FK__Alternati__Crite__0E6E26BF" FromRole="Criteria" ToRole="AlternativeComparisons" />
+          <NavigationProperty Name="Choice" Relationship="Self.FK__Criteria__Choice__04E4BC85" FromRole="Criteria" ToRole="Choices" />
+          <NavigationProperty Name="CriteriaComparisons" Relationship="Self.FK__CriteriaC__Crite__07C12930" FromRole="Criteria" ToRole="CriteriaComparisons" />
+          <NavigationProperty Name="CriteriaComparisons1" Relationship="Self.FK__CriteriaC__Crite__08B54D69" FromRole="Criteria" ToRole="CriteriaComparisons" />
+        </EntityType>
+        <EntityType Name="CriteriaComparison">
+          <Key>
+            <PropertyRef Name="CriteriaID1" />
+            <PropertyRef Name="CriteriaID2" />
+          </Key>
+          <Property Name="CriteriaID1" Type="Guid" Nullable="false" />
+          <Property Name="CriteriaID2" Type="Guid" Nullable="false" />
+          <Property Name="CriteriaRatio" Type="Double" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Criterion" Relationship="Self.FK__CriteriaC__Crite__07C12930" FromRole="CriteriaComparisons" ToRole="Criteria" />
+          <NavigationProperty Name="Criterion1" Relationship="Self.FK__CriteriaC__Crite__08B54D69" FromRole="CriteriaComparisons" ToRole="Criteria" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Choices" Relationship="Self.FK__Choices__UserID__02084FDA" FromRole="Users" ToRole="Choices" />
+        </EntityType>
+        <Association Name="FK__Alternati__Alter__0F624AF8">
+          <End Role="Alternatives" Type="Self.Alternative" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternatives">
+              <PropertyRef Name="AlternativeID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="AlternativeID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Alter__10566F31">
+          <End Role="Alternatives" Type="Self.Alternative" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternatives">
+              <PropertyRef Name="AlternativeID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="AlternativeID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Crite__0E6E26BF">
+          <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
+          <End Role="AlternativeComparisons" Type="Self.AlternativeComparison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="AlternativeComparisons">
+              <PropertyRef Name="CriteriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alternati__Choic__0B91BA14">
+          <End Role="Choices" Type="Self.Choice" Multiplicity="1" />
+          <End Role="Alternatives" Type="Self.Alternative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="ChoiceID" />
+            </Principal>
+            <Dependent Role="Alternatives">
+              <PropertyRef Name="ChoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Choices__UserID__02084FDA">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Choices" Type="Self.Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Choices">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Criteria__Choice__04E4BC85">
+          <End Role="Choices" Type="Self.Choice" Multiplicity="1" />
+          <End Role="Criteria" Type="Self.Criterion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Choices">
+              <PropertyRef Name="ChoiceID" />
+            </Principal>
+            <Dependent Role="Criteria">
+              <PropertyRef Name="ChoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CriteriaC__Crite__07C12930">
+          <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
+          <End Role="CriteriaComparisons" Type="Self.CriteriaComparison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="CriteriaComparisons">
+              <PropertyRef Name="CriteriaID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CriteriaC__Crite__08B54D69">
+          <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
+          <End Role="CriteriaComparisons" Type="Self.CriteriaComparison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="CriteriaID" />
+            </Principal>
+            <Dependent Role="CriteriaComparisons">
+              <PropertyRef Name="CriteriaID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AHPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AlternativeComparisons" EntityType="Self.AlternativeComparison" />
+          <EntitySet Name="Alternatives" EntityType="Self.Alternative" />
+          <EntitySet Name="Choices" EntityType="Self.Choice" />
+          <EntitySet Name="Criteria" EntityType="Self.Criterion" />
+          <EntitySet Name="CriteriaComparisons" EntityType="Self.CriteriaComparison" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Alternati__Alter__0F624AF8" Association="Self.FK__Alternati__Alter__0F624AF8">
+            <End Role="Alternatives" EntitySet="Alternatives" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Alter__10566F31" Association="Self.FK__Alternati__Alter__10566F31">
+            <End Role="Alternatives" EntitySet="Alternatives" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Crite__0E6E26BF" Association="Self.FK__Alternati__Crite__0E6E26BF">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="AlternativeComparisons" EntitySet="AlternativeComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alternati__Choic__0B91BA14" Association="Self.FK__Alternati__Choic__0B91BA14">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="Alternatives" EntitySet="Alternatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Choices__UserID__02084FDA" Association="Self.FK__Choices__UserID__02084FDA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Choices" EntitySet="Choices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Criteria__Choice__04E4BC85" Association="Self.FK__Criteria__Choice__04E4BC85">
+            <End Role="Choices" EntitySet="Choices" />
+            <End Role="Criteria" EntitySet="Criteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CriteriaC__Crite__07C12930" Association="Self.FK__CriteriaC__Crite__07C12930">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="CriteriaComparisons" EntitySet="CriteriaComparisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CriteriaC__Crite__08B54D69" Association="Self.FK__CriteriaC__Crite__08B54D69">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="CriteriaComparisons" EntitySet="CriteriaComparisons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AHPModelStoreContainer" CdmEntityContainer="AHPEntities">
+          <EntitySetMapping Name="AlternativeComparisons">
+            <EntityTypeMapping TypeName="AHPModel.AlternativeComparison">
+              <MappingFragment StoreEntitySet="AlternativeComparisons">
+                <ScalarProperty Name="CriteriaID" ColumnName="CriteriaID" />
+                <ScalarProperty Name="AlternativeID1" ColumnName="AlternativeID1" />
+                <ScalarProperty Name="AlternativeID2" ColumnName="AlternativeID2" />
+                <ScalarProperty Name="AlternativeRatio" ColumnName="AlternativeRatio" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alternatives">
+            <EntityTypeMapping TypeName="AHPModel.Alternative">
+              <MappingFragment StoreEntitySet="Alternatives">
+                <ScalarProperty Name="AlternativeID" ColumnName="AlternativeID" />
+                <ScalarProperty Name="AlternativeName" ColumnName="AlternativeName" />
+                <ScalarProperty Name="AlternativeScore" ColumnName="AlternativeScore" />
+                <ScalarProperty Name="ChoiceID" ColumnName="ChoiceID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Choices">
+            <EntityTypeMapping TypeName="AHPModel.Choice">
+              <MappingFragment StoreEntitySet="Choices">
+                <ScalarProperty Name="ChoiceID" ColumnName="ChoiceID" />
+                <ScalarProperty Name="ChoiceName" ColumnName="ChoiceName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Criteria">
+            <EntityTypeMapping TypeName="AHPModel.Criterion">
+              <MappingFragment StoreEntitySet="Criteria">
+                <ScalarProperty Name="CriteriaID" ColumnName="CriteriaID" />
+                <ScalarProperty Name="CriteriaName" ColumnName="CriteriaName" />
+                <ScalarProperty Name="CriteriaScore" ColumnName="CriteriaScore" />
+                <ScalarProperty Name="ChoiceID" ColumnName="ChoiceID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CriteriaComparisons">
+            <EntityTypeMapping TypeName="AHPModel.CriteriaComparison">
+              <MappingFragment StoreEntitySet="CriteriaComparisons">
+                <ScalarProperty Name="CriteriaID1" ColumnName="CriteriaID1" />
+                <ScalarProperty Name="CriteriaID2" ColumnName="CriteriaID2" />
+                <ScalarProperty Name="CriteriaRatio" ColumnName="CriteriaRatio" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AHPModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

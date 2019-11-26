@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AHP.WebAPI.Models.ChoiceMvcModel>
+
+@{
+    ViewBag.Title = "ListChoices";
+}
+
+<h2>Choices</h2>
+<p>
+    @Html.ActionLink("Create New", "CreateChoice")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateUpdated)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateUpdated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditChoice", "LoggedIn", new { choiceID = item.ChoiceID }, null) |
+                @Html.ActionLink("Delete", "DeleteChoice", new { choiceID = item.ChoiceID })
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    @Html.ActionLink("Prev", "ListChoices", "LoggedIn", new { page = ((int)Session["Page"] - 1) }, null) |
+    @Html.ActionLink("Next", "ListChoices", "LoggedIn", new { page = ((int)Session["Page"] + 1) }, null) (@Session["Page"])
+</div>

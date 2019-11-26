@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a19ffd1a701496193031ba04cca3453" Name="Diagram1">
+        <EntityTypeShape EntityType="AHPModel.AlternativeComparison" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AHPModel.Alternative" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AHPModel.Choice" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AHPModel.Criterion" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AHPModel.CriteriaComparison" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AHPModel.User" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="AHPModel.FK__Alternati__Alter__0F624AF8" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__Alternati__Alter__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__Alternati__Crite__0E6E26BF" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__Alternati__Choic__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__Choices__UserID__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__Criteria__Choice__04E4BC85" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__CriteriaC__Crite__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="AHPModel.FK__CriteriaC__Crite__08B54D69" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

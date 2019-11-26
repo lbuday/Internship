@@ -1,0 +1,78 @@
+﻿@model IEnumerable<AHP.WebAPI.Models.CriterionMvcModel>
+
+@{
+    ViewBag.Title = "ListCriteria";
+}
+<h2>@Session["ChoiceName"]</h2>
+
+<h2>Criteria</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCriterion")
+</p>
+<div>
+    @Html.ActionLink("Alternatives", "ListAlternatives", "Alternative", new { page = 1 }, null) |
+    @Html.ActionLink("Criteria", "ListCriteria", "Criterion", new { page = 1 }, null)
+    @if ((bool)Session["AnyUnfilledAlt"] || (bool)Session["AnyUnfilledCrit"])
+    {
+        <font color="red"> !</font>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CriteriaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateUpdated)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CriteriaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateUpdated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCriterion", new { criterionid = item.CriteriaID }) |
+                @Html.ActionLink("Delete", "DeleteCriterion", new { criterionid = item.CriteriaID })
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    @Html.ActionLink("Prev", "ListCriteria", "Criterion", new { page = ((int)Session["Page"] - 1) }, null) |
+    @Html.ActionLink("Next", "ListCriteria", "Criterion", new { page = ((int)Session["Page"] + 1) }, null) (@Session["Page"])
+</div>
+<div>
+    @Html.ActionLink("Choices", "BackToChoices", "LoggedIn", new { page = 1 }, null)
+</div>
+<br />
+<div>
+    @if ((bool)Session["AnyUnfilledCrit"])
+    {
+        <input type="button" class="btn btn-warning" value="Unfilled" onclick="location.href='@Url.Action("Unfilled", "CriteriaComparison")'" />
+        <font color="red">There are unfilled comparisons</font>
+    }
+    else
+    {
+        <input type="button" class="btn btn-warning" value="Unfilled" disabled />
+    }
+</div>
+<br />
+<div>
+    @if ((bool)Session["AnyUnfilledAlt"] || (bool)Session["AnyUnfilledCrit"])
+    {
+        <input type="button" class="btn btn-danger mr-2" value="Calculate" disabled />
+    }
+    else
+    {
+        <input type="button" class="btn btn-danger mr-2" value="Calculate" onclick="location.href='@Url.Action("Calculate", "Criterion")'" />
+    }
+</div>
+
